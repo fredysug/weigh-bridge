@@ -22,8 +22,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import android.template.core.data.MyModelRepository
-import android.template.core.data.DefaultMyModelRepository
+import android.template.core.data.TicketRepository
+import android.template.core.data.TicketRepositoryImpl
+import android.template.core.data.Ticket
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,17 +35,21 @@ interface DataModule {
 
     @Singleton
     @Binds
-    fun bindsMyModelRepository(
-        myModelRepository: DefaultMyModelRepository
-    ): MyModelRepository
+    fun bindsMyModelRepository(myModelRepository: TicketRepositoryImpl): TicketRepository
 }
 
-class FakeMyModelRepository @Inject constructor() : MyModelRepository {
-    override val myModels: Flow<List<String>> = flowOf(fakeMyModels)
+class FakeTicketRepository @Inject constructor() : TicketRepository {
+    override val tickets: Flow<List<Ticket>> = flowOf(fakeMyModels)
 
-    override suspend fun add(name: String) {
-        throw NotImplementedError()
+    override suspend fun add(
+        date: Date,
+        licenseNumber: String,
+        driverName: String,
+        inboundWeight: Double,
+        outboundWeight: Double
+    ) {
+        TODO("Not yet implemented")
     }
 }
 
-val fakeMyModels = listOf("One", "Two", "Three")
+val fakeMyModels = emptyList<Ticket>()

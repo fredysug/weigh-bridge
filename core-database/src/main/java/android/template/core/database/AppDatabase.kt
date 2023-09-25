@@ -18,8 +18,10 @@ package android.template.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
-@Database(entities = [MyModel::class], version = 1)
+@Database(entities = [Ticket::class], version = 1)
+@TypeConverters(TimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun myModelDao(): MyModelDao
+    abstract fun ticketDao(): TicketDao
 }

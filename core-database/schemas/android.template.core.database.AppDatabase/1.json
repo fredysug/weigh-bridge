@@ -2,22 +2,46 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8bebd6aab64557ab1de14693ec7b4103",
+    "identityHash": "dee1c7ae6893879bb3c8e9016a6b21ce",
     "entities": [
       {
-        "tableName": "MyModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "tableName": "Ticket",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `license_number` TEXT NOT NULL, `driver_name` TEXT NOT NULL, `inbound_weight` REAL NOT NULL, `outbound_weight` REAL NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "uid",
             "columnName": "uid",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenseNumber",
+            "columnName": "license_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "driverName",
+            "columnName": "driver_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inboundWeight",
+            "columnName": "inbound_weight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outboundWeight",
+            "columnName": "outbound_weight",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -34,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8bebd6aab64557ab1de14693ec7b4103')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dee1c7ae6893879bb3c8e9016a6b21ce')"
     ]
   }
 }

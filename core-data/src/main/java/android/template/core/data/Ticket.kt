@@ -16,26 +16,25 @@
 
 package android.template.core.data
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import android.template.core.database.MyModel
-import android.template.core.database.MyModelDao
-import javax.inject.Inject
+import android.template.core.database.Ticket
+import java.util.Date
 
-interface MyModelRepository {
-    val myModels: Flow<List<String>>
+data class Ticket(
+    val uid: Int,
+    val date: Date,
+    val licenseNumber: String,
+    val driverName: String,
+    val inboundWeight: Double,
+    val outboundWeight: Double,
+){
+    val netWeight = outboundWeight - inboundWeight
 
-    suspend fun add(name: String)
-}
-
-class DefaultMyModelRepository @Inject constructor(
-    private val myModelDao: MyModelDao
-) : MyModelRepository {
-
-    override val myModels: Flow<List<String>> =
-        myModelDao.getMyModels().map { items -> items.map { it.name } }
-
-    override suspend fun add(name: String) {
-        myModelDao.insertMyModel(MyModel(name = name))
-    }
+    constructor(databaseTicket: Ticket) : this(
+        uid = databaseTicket.uid,
+        date = databaseTicket.date,
+        licenseNumber = databaseTicket.licenseNumber,
+        driverName = databaseTicket.driverName,
+        inboundWeight = databaseTicket.inboundWeight,
+        outboundWeight = databaseTicket.outboundWeight,
+    )
 }

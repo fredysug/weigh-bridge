@@ -16,26 +16,30 @@
 
 package android.template.core.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Entity
-data class MyModel(
-    val name: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-}
+data class Ticket(
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+    @ColumnInfo(name = "date") val date: Date,
+    @ColumnInfo(name = "license_number") val licenseNumber: String,
+    @ColumnInfo(name = "driver_name") val driverName: String,
+    @ColumnInfo(name = "inbound_weight") val inboundWeight: Double,
+    @ColumnInfo(name = "outbound_weight") val outboundWeight: Double,
+)
 
 @Dao
-interface MyModelDao {
-    @Query("SELECT * FROM mymodel ORDER BY uid DESC LIMIT 10")
-    fun getMyModels(): Flow<List<MyModel>>
+interface TicketDao {
+    @Query("SELECT * FROM ticket")
+    fun getTickets(): Flow<List<Ticket>>
 
     @Insert
-    suspend fun insertMyModel(item: MyModel)
+    suspend fun insertTicket(item: Ticket)
 }
