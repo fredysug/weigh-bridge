@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":app"))
     implementation(project(":core-data"))
     implementation(project(":core-testing"))
+    implementation(project(":core-database"))
     implementation(project(":feature-weighbridge"))
 
     // Testing

@@ -49,6 +49,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -58,6 +62,7 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
     androidTestImplementation(project(":core-testing"))
+    testImplementation(project(":core-testing"))
 
     // Core Android dependencies
     implementation(libs.androidx.activity.compose)
@@ -94,4 +99,9 @@ dependencies {
     // Instrumented tests: jUnit rules and runners
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
+
+    // Mockk
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.android)
+
 }

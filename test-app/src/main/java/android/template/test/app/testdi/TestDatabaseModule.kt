@@ -23,6 +23,13 @@ import dagger.hilt.testing.TestInstallIn
 import android.template.core.data.TicketRepository
 import android.template.core.data.di.DataModule
 import android.template.core.data.di.FakeTicketRepository
+import android.template.core.database.AppDatabase
+import android.template.core.database.Ticket
+import android.template.core.database.TicketDao
+import android.template.core.database.di.DatabaseModule
+import dagger.Provides
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 @Module
 @TestInstallIn(
@@ -35,4 +42,32 @@ interface FakeDataModule {
     abstract fun bindRepository(
         fakeRepository: FakeTicketRepository
     ): TicketRepository
+}
+@Module
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [DatabaseModule::class]
+)
+interface FakeDatabaseModule2 {
+
+    @Provides
+    fun provideTicketDao(): TicketDao {
+        return FakeTicketDao()
+    }
+
+    private class FakeTicketDao : TicketDao {
+
+        private val data = mutableListOf<Ticket>()
+        var dataAdded = false
+
+        override fun getTickets(): Flow<List<Ticket>> = flow {
+            emit(data)
+        }
+
+        override suspend fun insertTicket(ticket: Ticket) {
+            dataAdded = true
+            data.add(0, ticket)
+        }
+    }
+
 }
