@@ -40,6 +40,13 @@ interface DataModule {
 
 class FakeTicketRepository @Inject constructor() : TicketRepository {
     override val tickets: Flow<List<Ticket>> = flowOf(fakeMyModels)
+    override suspend fun getTicket(uid: Int): Ticket {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateTicket(ticket: Ticket) {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun add(
         date: Date,

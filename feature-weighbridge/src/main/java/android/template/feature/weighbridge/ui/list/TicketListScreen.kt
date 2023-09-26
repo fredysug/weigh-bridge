@@ -136,7 +136,11 @@ fun TicketListScreen(
                     }
 
                     if (uiState.data.isNotEmpty())
-                        Tickets(data = uiState.data, expand = viewModel::onExpand)
+                        Tickets(
+                            data = uiState.data,
+                            navController = navController,
+                            expand = viewModel::onExpand
+                        )
                     else Box(
                         modifier = modifier
                             .fillMaxSize(),
@@ -283,6 +287,7 @@ fun Field.getLabel() = when (this) {
 @Composable
 private fun Tickets(
     modifier: Modifier = Modifier, data: List<TicketViewObject>,
+    navController: NavHostController,
     expand: (Int, Boolean) -> Unit,
 ) {
     val dateFormatter = SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault())
@@ -299,6 +304,9 @@ private fun Tickets(
                         contentDescription = "",
                         modifier = Modifier
                             .padding(8.dp)
+                            .clickable {
+                                navController.navigate("edit_ticket/${ticket.uid}")
+                            }
                     )
                     Column {
                         Row(

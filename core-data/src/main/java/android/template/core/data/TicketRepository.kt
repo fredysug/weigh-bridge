@@ -24,7 +24,8 @@ import javax.inject.Inject
 
 interface TicketRepository {
     val tickets: Flow<List<Ticket>>
-
+    suspend fun getTicket(uid: Int): Ticket
+    suspend fun updateTicket(ticket: Ticket)
     suspend fun add(
         date: Date,
         licenseNumber: String,
@@ -42,6 +43,24 @@ class TicketRepositoryImpl @Inject constructor(
         ticketDao.getTickets().map { items ->
             items.map { Ticket(it) }
         }
+
+    override suspend fun getTicket(uid: Int): Ticket {
+        val ticketDB = ticketDao.getTicket(uid)
+        return Ticket(ticketDB)
+    }
+
+    override suspend fun updateTicket(ticket: Ticket) {
+        ticketDao.insertTicket(
+            android.template.core.database.Ticket(
+                uid = ticket.uid,
+                licenseNumber = ticket.licenseNumber,
+                driverName = ticket.driverName,
+                inboundWeight = ticket.inboundWeight,
+                outboundWeight = ticket.outboundWeight,
+                date = ticket.date,
+            )
+        )
+    }
 
     override suspend fun add(
         date: Date,

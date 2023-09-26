@@ -25,7 +25,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import android.template.feature.weighbridge.ui.add.AddTicketScreen
+import android.template.feature.weighbridge.ui.edit.EditTicketScreen
 import android.template.feature.weighbridge.ui.list.TicketListScreen
+import android.util.Log
 
 @Composable
 fun MainNavigation() {
@@ -38,6 +40,14 @@ fun MainNavigation() {
         }
         composable(Screens.AddTicket.route) {
             AddTicketScreen(modifier = Modifier.padding(16.dp), navController = navController)
+        }
+        composable(Screens.EditTicket.route) {
+            val ticketUid = it.arguments?.getString("id")?.toInt() ?: 0
+            EditTicketScreen(
+                modifier = Modifier.padding(16.dp),
+                ticketUid = ticketUid,
+                navController = navController
+            )
         }
         // TODO: Add more destinations0
     }

@@ -20,6 +20,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +41,9 @@ interface TicketDao {
     @Query("SELECT * FROM ticket")
     fun getTickets(): Flow<List<Ticket>>
 
-    @Insert
+    @Query("SELECT * FROM ticket where uid = :uid")
+    suspend fun getTicket(uid: Int): Ticket
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTicket(item: Ticket)
 }

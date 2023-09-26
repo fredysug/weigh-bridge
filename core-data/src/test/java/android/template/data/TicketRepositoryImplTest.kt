@@ -56,6 +56,7 @@ class TicketRepositoryImplTest {
         assertTrue(dao.dataAdded)
     }
 
+
     @Test
     fun `when get ticket from Dao, should return ticket as entity`() = runTest {
         val date = Date(1695643100439)
@@ -80,6 +81,53 @@ class TicketRepositoryImplTest {
         )
     }
 
+    @Test
+    fun `when get by uid, should add ticket to return ticket as entity`() = runTest {
+        val date = Date(1695643100439)
+        val licenseNumber = "license"
+        val driverName = "driverName"
+        val inboundWeight = 0.0
+        val outboundWeight = 1.0
+
+        repository.add(
+            date = date,
+            licenseNumber = licenseNumber,
+            driverName = driverName,
+            inboundWeight = inboundWeight,
+            outboundWeight = outboundWeight,
+        )
+
+        val ticket = repository.getTicket(0)
+
+        assertEquals(date, ticket.date)
+        assertEquals(licenseNumber, ticket.licenseNumber)
+        assertEquals(driverName, ticket.driverName)
+        assertEquals(inboundWeight, ticket.inboundWeight, 0.0)
+        assertEquals(outboundWeight, ticket.outboundWeight, 0.0)
+    }
+
+    @Test
+    fun `when update ticket, should re-add ticket again to the dao `() = runTest {
+        val date = Date(1695643100439)
+        val licenseNumber = "license"
+        val driverName = "driverName"
+        val inboundWeight = 0.0
+        val outboundWeight = 1.0
+
+        repository.updateTicket(
+            android.template.core.data.Ticket(
+                uid = 0,
+                date = date,
+                licenseNumber = licenseNumber,
+                driverName = driverName,
+                inboundWeight = inboundWeight,
+                outboundWeight = outboundWeight,
+            )
+        )
+
+        assertTrue(dao.dataAdded)
+    }
+
 }
 
 private class FakeTicketDao : TicketDao {
@@ -89,6 +137,10 @@ private class FakeTicketDao : TicketDao {
 
     override fun getTickets(): Flow<List<Ticket>> = flow {
         emit(data)
+    }
+
+    override suspend fun getTicket(uid: Int): Ticket {
+        return data.first { it.uid == uid }
     }
 
     override suspend fun insertTicket(ticket: Ticket) {
