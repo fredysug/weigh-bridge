@@ -17,7 +17,7 @@
 package android.template.feature.weighbridge.ui.add
 
 import android.template.core.ui.DateTimePicker
-import android.template.core.ui.MyApplicationTheme
+import android.template.core.ui.WeighBridgeApplicationTheme
 import android.template.core.ui.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -230,7 +230,7 @@ private fun TicketForm(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
-    MyApplicationTheme {
+    WeighBridgeApplicationTheme {
 //        AddEditTicketScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
 }
@@ -238,7 +238,7 @@ private fun DefaultPreview() {
 @Preview(showBackground = true, widthDp = 480)
 @Composable
 private fun PortraitPreview() {
-    MyApplicationTheme {
+    WeighBridgeApplicationTheme {
 //        AddEditTicketScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
 }

@@ -51,8 +51,8 @@ class AddTicketViewModel @Inject constructor(
                     with(_addTicketForm.value) {
                         ticketRepository.add(
                             date = date,
-                            licenseNumber = licenseNumber,
-                            driverName = driverName,
+                            licenseNumber = licenseNumber.trim(),
+                            driverName = driverName.trim(),
                             inboundWeight = inboundWeight.toDouble(),
                             outboundWeight = outboundWeight.toDouble(),
                         )

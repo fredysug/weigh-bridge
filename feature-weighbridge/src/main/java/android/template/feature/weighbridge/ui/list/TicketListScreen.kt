@@ -43,8 +43,10 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.End
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
@@ -291,62 +293,72 @@ private fun Tickets(
                     .fillMaxWidth()
                     .clickable { expand(ticket.uid, !ticket.expanded) },
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(
-                        modifier = Modifier.wrapContentWidth(),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(
-                            text = ticket.licenseNumber,
-                            fontWeight = Bold,
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = TopEnd) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_edit),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(8.dp)
+                    )
+                    Column {
+                        Row(
                             modifier = Modifier
-                                .border(
-                                    border = BorderStroke(
-                                        1.dp, colorScheme.outline
-                                    ), shape = RoundedCornerShape(4.dp)
+                                .fillMaxSize()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Column(
+                                modifier = Modifier.wrapContentWidth(),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = ticket.licenseNumber,
+                                    fontWeight = Bold,
+                                    modifier = Modifier
+                                        .border(
+                                            border = BorderStroke(
+                                                1.dp, colorScheme.outline
+                                            ), shape = RoundedCornerShape(4.dp)
+                                        )
+                                        .padding(8.dp),
                                 )
-                                .padding(8.dp),
-                        )
-                        Text(text = "Driver:${ticket.driverName}")
-                        Text(text = dateFormatter.format(ticket.date))
+                                Text(text = "Driver: ${ticket.driverName}")
+                                Text(text = dateFormatter.format(ticket.date))
 
-                    }
-                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            }
+
+                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_weight), ""
+                                )
+                                Text(text = ticket.netWeight, fontWeight = Bold)
+                            }
+                        }
+
+                        if (ticket.expanded) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Icon(painter = painterResource(id = R.drawable.ic_input), "")
+                                    Text(text = ticket.inboundWeight)
+                                }
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Icon(painter = painterResource(id = R.drawable.ic_output), "")
+                                    Text(text = ticket.outboundWeight)
+                                }
+                            }
+                        }
+
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_weight), ""
+                            modifier = Modifier.fillMaxWidth(),
+                            imageVector = if (ticket.expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                            contentDescription = ""
                         )
-                        Text(text = ticket.netWeight, fontWeight = Bold)
                     }
                 }
-
-                if (ticket.expanded) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Icon(painter = painterResource(id = R.drawable.ic_input), "")
-                            Text(text = ticket.inboundWeight)
-                        }
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Icon(painter = painterResource(id = R.drawable.ic_output), "")
-                            Text(text = ticket.outboundWeight)
-                        }
-                    }
-                }
-
-                Icon(
-                    modifier = Modifier.fillMaxWidth(),
-                    imageVector = if (ticket.expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                    contentDescription = ""
-                )
-
             }
         }
     })

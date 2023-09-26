@@ -43,6 +43,12 @@ fun DateTimePicker(
     modifier: Modifier = Modifier,
     value: Date = Date(),
     onValueChange: (Date) -> Unit,
+    label: @Composable (() -> Unit) = {
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Icon(Icons.Default.DateRange, "")
+            Text("Date and Time")
+        }
+    },
 ) {
     val calendar by remember {
         mutableStateOf(Calendar.getInstance().apply { time = value })
@@ -62,6 +68,7 @@ fun DateTimePicker(
     if (source.collectIsPressedAsState().value) {
         pickerState = PickDate
     }
+
     OutlinedTextField(
         modifier = modifier,
         interactionSource = source,
@@ -70,12 +77,7 @@ fun DateTimePicker(
         readOnly = true,
         enabled = true,
         onValueChange = { },
-        label = {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Icon(Icons.Default.DateRange, "")
-                Text("Date and Time")
-            }
-        },
+        label = label,
     )
 
     if (pickerState != Hidden) {
