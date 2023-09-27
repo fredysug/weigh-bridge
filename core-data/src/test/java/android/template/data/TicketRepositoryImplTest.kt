@@ -16,7 +16,7 @@
 
 package android.template.data
 
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import android.template.core.data.TicketRepositoryImpl
+import android.template.core.data.repository.TicketRepositoryImpl
 import android.template.core.database.Ticket
 import android.template.core.database.TicketDao
 import org.junit.Assert.assertTrue
@@ -46,6 +46,7 @@ class TicketRepositoryImplTest {
     @Test
     fun `when add, should add ticket to dao`() = runTest {
         repository.add(
+            0,
             Date(1695643100439),
             "license",
             "driverName",
@@ -65,7 +66,7 @@ class TicketRepositoryImplTest {
         val inboundWeight = 0.0
         val outboundWeight = 1.0
 
-        repository.add(date, licenseNumber, driverName, inboundWeight, outboundWeight)
+        repository.add(0, date, licenseNumber, driverName, inboundWeight, outboundWeight)
 
         assertEquals(repository.tickets.first().size, 1)
         assertEquals(
@@ -90,6 +91,7 @@ class TicketRepositoryImplTest {
         val outboundWeight = 1.0
 
         repository.add(
+            uid = 0,
             date = date,
             licenseNumber = licenseNumber,
             driverName = driverName,
@@ -143,8 +145,9 @@ private class FakeTicketDao : TicketDao {
         return data.first { it.uid == uid }
     }
 
-    override suspend fun insertTicket(ticket: Ticket) {
+    override suspend fun insertTicket(ticket: Ticket): Long {
         dataAdded = true
         data.add(0, ticket)
+        return 1L
     }
 }

@@ -18,7 +18,7 @@ package android.template.feature.weighbridge.ui.edit
 
 import android.template.core.data.Ticket
 import android.template.core.data.util.Logger
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

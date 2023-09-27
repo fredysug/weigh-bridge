@@ -19,10 +19,11 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.gms)
 }
 
 android {
-    namespace = "android.template.core.data"
+    namespace = "android.template"
     compileSdk = 33
 
     defaultConfig {
@@ -57,6 +58,11 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
+
+    implementation(platform(libs.androidx.firebase.bom))
+    implementation(libs.androidx.firebase.common.ktx)
+    implementation(libs.androidx.firebase.database.ktx)
+    implementation(libs.gson)
 
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)

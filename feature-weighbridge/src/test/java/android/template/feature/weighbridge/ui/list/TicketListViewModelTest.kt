@@ -1,9 +1,8 @@
 package android.template.feature.weighbridge.ui.list
 
 import android.template.core.data.Ticket
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import android.template.core.testing.CoroutinesTestRule
-import android.template.feature.weighbridge.ui.add.AddTicketViewModel
 import android.template.feature.weighbridge.ui.list.UiState.Success.Filter
 import android.template.feature.weighbridge.ui.list.UiState.Success.Filter.FilterDateRange
 import android.template.feature.weighbridge.ui.list.UiState.Success.Filter.FilterDriver
@@ -18,13 +17,9 @@ import android.template.feature.weighbridge.ui.list.UiState.Success.Sort.License
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

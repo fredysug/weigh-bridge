@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package android.template.core.data
+package android.template.core.data.repository
 
-import kotlinx.coroutines.flow.Flow
+import android.template.core.data.Ticket
 import android.template.core.database.TicketDao
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.Date
 import javax.inject.Inject
@@ -27,12 +28,13 @@ interface TicketRepository {
     suspend fun getTicket(uid: Int): Ticket
     suspend fun updateTicket(ticket: Ticket)
     suspend fun add(
+        uid: Int,
         date: Date,
         licenseNumber: String,
         driverName: String,
         inboundWeight: Double,
         outboundWeight: Double,
-    )
+    ): Long
 }
 
 class TicketRepositoryImpl @Inject constructor(
@@ -63,14 +65,16 @@ class TicketRepositoryImpl @Inject constructor(
     }
 
     override suspend fun add(
+        uid: Int,
         date: Date,
         licenseNumber: String,
         driverName: String,
         inboundWeight: Double,
         outboundWeight: Double,
-    ) {
-        ticketDao.insertTicket(
+    ): Long {
+       return ticketDao.insertTicket(
             android.template.core.database.Ticket(
+                uid = uid,
                 licenseNumber = licenseNumber,
                 driverName = driverName,
                 inboundWeight = inboundWeight,

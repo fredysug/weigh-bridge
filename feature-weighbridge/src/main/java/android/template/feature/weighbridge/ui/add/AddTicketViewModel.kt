@@ -17,7 +17,7 @@
 package android.template.feature.weighbridge.ui.add
 
 import android.template.core.data.util.Logger
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,6 +50,7 @@ class AddTicketViewModel @Inject constructor(
                 try {
                     with(_addTicketForm.value) {
                         ticketRepository.add(
+                            0,
                             date = date,
                             licenseNumber = licenseNumber.trim(),
                             driverName = driverName.trim(),

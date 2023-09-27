@@ -1,15 +1,11 @@
 package android.template.feature.weighbridge.ui.add
 
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import android.template.core.testing.CoroutinesTestRule
-import io.mockk.called
-import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -171,7 +167,7 @@ class AddTicketViewModelTest {
         assertTrue(viewModel.addTicketForm.value.inboundWeightError)
         assertTrue(viewModel.addTicketForm.value.outboundWeightError)
 
-        coVerify(exactly = 0) { repository.add(any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) { repository.add(any(), any(), any(), any(), any(), any()) }
     }
 
     @Test
@@ -202,6 +198,7 @@ class AddTicketViewModelTest {
 
         coVerify(exactly = 1) {
             repository.add(
+                any(),
                 date,
                 licenseNumber,
                 driverName,

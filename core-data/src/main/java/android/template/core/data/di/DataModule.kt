@@ -22,8 +22,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import android.template.core.data.TicketRepository
-import android.template.core.data.TicketRepositoryImpl
+import android.template.core.data.repository.TicketRepository
+import android.template.core.data.repository.TicketRepositoryImpl
 import android.template.core.data.Ticket
 import java.util.Date
 import javax.inject.Inject
@@ -49,12 +49,13 @@ class FakeTicketRepository @Inject constructor() : TicketRepository {
     }
 
     override suspend fun add(
+        uid: Int,
         date: Date,
         licenseNumber: String,
         driverName: String,
         inboundWeight: Double,
         outboundWeight: Double
-    ) {
+    ): Long {
         TODO("Not yet implemented")
     }
 }

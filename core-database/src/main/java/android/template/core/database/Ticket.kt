@@ -45,5 +45,5 @@ interface TicketDao {
     suspend fun getTicket(uid: Int): Ticket
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTicket(item: Ticket)
+    suspend fun insertTicket(item: Ticket) : Long
 }

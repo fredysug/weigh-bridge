@@ -20,12 +20,12 @@ import android.template.core.database.Ticket
 import java.util.Date
 
 data class Ticket(
-    val uid: Int,
-    val date: Date,
-    val licenseNumber: String,
-    val driverName: String,
-    val inboundWeight: Double,
-    val outboundWeight: Double,
+    val uid: Int= 0,
+    val date: Date=Date() ,
+    val licenseNumber: String= "",
+    val driverName: String= "",
+    val inboundWeight: Double= 0.0,
+    val outboundWeight: Double= 0.0,
 ){
     val netWeight = outboundWeight - inboundWeight
 

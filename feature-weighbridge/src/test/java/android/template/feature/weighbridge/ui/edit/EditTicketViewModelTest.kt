@@ -1,7 +1,7 @@
 package android.template.feature.weighbridge.ui.edit
 
 import android.template.core.data.Ticket
-import android.template.core.data.TicketRepository
+import android.template.core.data.repository.TicketRepository
 import android.template.core.testing.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.coVerify
